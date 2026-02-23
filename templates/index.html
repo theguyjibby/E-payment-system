@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}send me money for no reason - Monochrome Pay{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center justify-center text-center space-y-12">
+    <!-- Main Header -->
+    <div class="space-y-4">
+        <h1 class="text-3xl md:text-4xl font-black tracking-tighter uppercase leading-none">
+            send me money<br />for no reason
+        </h1>
+        <div class="h-1 w-12 bg-primary mx-auto rounded-full"></div>
+    </div>
+
+    <!-- Direct Action Buttons -->
+    <div class="w-full max-w-xs flex flex-col gap-4">
+        <a href="{{ url_for('donate_card_handler') }}"
+            class="group relative w-full bg-primary text-white py-6 rounded-2xl font-black text-xl shadow-2xl shadow-black/20 hover:scale-[1.02] active:scale-[0.98] transition-all overflow-hidden">
+            <span class="relative z-10">Donate with Card</span>
+            <div
+                class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+            </div>
+        </a>
+
+        <a href="{{ url_for('donate_bank_transfer') }}"
+            class="w-full bg-white dark:bg-slate-900 text-primary dark:text-white py-6 rounded-2xl font-black text-xl border-4 border-primary dark:border-white hover:bg-slate-50 dark:hover:bg-slate-800 active:scale-[0.98] transition-all">
+            Bank Transfer
+        </a>
+    </div>
+
+    <!-- Paystack Integration Branding -->
+    <div class="pt-8 flex flex-col items-center gap-2 opacity-40 hover:opacity-100 transition-opacity">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em]">Secured by</p>
+        <div class="flex items-center gap-1">
+            <img src="https://assets.paystack.com/assets/img/logos/merchants/_main/Paystack-logo.png" alt="Paystack"
+                class="h-5 object-contain dark:invert">
+        </div>
+    </div>
+</section>
+
+<!-- Hide nav on this specific page for "blank page" feel -->
+<style>
+    nav,
+    .fixed-bottom-nav {
+        display: none !important;
+    }
+
+    main {
+        padding-bottom: 0 !important;
+    }
+</style>
+{% endblock %}

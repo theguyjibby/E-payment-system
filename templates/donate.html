@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Select Payment Method - Monochrome Pay{% endblock %}
+
+{% block content %}
+<section class="space-y-6">
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold tracking-tight">Send me money for no reason</h2>
+        <p class="text-slate-500 mt-2">Select your payment method</p>
+    </div>
+
+    <div class="flex flex-col gap-4">
+        <a href="{{ url_for('donate_card_handler') }}"
+            class="w-full bg-primary text-white py-6 rounded-2xl font-bold text-center text-lg shadow-xl shadow-black/10 active:scale-[0.98] transition-all">
+            Card
+        </a>
+
+        <a href="{{ url_for('donate_bank_transfer') }}"
+            class="w-full bg-white dark:bg-slate-900 text-primary dark:text-white py-6 rounded-2xl font-bold text-center text-lg border-2 border-slate-200 dark:border-slate-800 active:scale-[0.98] transition-all">
+            Bank Transfer
+        </a>
+    </div>
+</section>
+{% endblock %}

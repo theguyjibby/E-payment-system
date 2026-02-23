@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Recent Activity - Monochrome Pay{% endblock %}
+
+{% block content %}
+<section class="space-y-6">
+    <div class="flex items-center justify-between mb-2">
+        <h2 class="text-2xl font-bold tracking-tight">Recent Activity</h2>
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden shadow-sm">
+        {% if donations %}
+        {% for donation in donations %}
+        <div class="flex items-center justify-between p-4">
+            <div class="flex items-center gap-4">
+                <div class="size-10 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary dark:text-white text-xl">
+                        {% if donation.payment_method == 'card' %}credit_card{% else %}account_balance{% endif %}
+                    </span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold">{% if donation.payment_method == 'card' %}Card Payment{% else %}Bank
+                        Transfer{% endif %}</p>
+                    <p class="text-[10px] text-slate-500 uppercase font-medium">{{ donation.created_at.strftime('%b %d,
+                        %Y') }} •
+                        <span
+                            class="{% if donation.status == 'success' %}text-green-600{% else %}text-amber-500{% endif %}">
+                            {{ donation.status }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="text-sm font-bold text-primary dark:text-white">₦{{ "{:,.2f}".format(donation.amount / 100) }}
+                </p>
+                <p class="text-[9px] text-slate-400 font-mono">{{ donation.reference[:8] }}...</p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="p-12 text-center">
+            <span class="material-symbols-outlined text-4xl text-slate-200 mb-2">history</span>
+            <p class="text-sm text-slate-400 font-medium">No activity yet</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Payment Success - Monochrome Pay{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center text-center justify-center space-y-6">
+    <div class="size-24 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
+        <span class="material-symbols-outlined text-5xl text-green-600 dark:text-green-400">check_circle</span>
+    </div>
+
+    <div class="space-y-2">
+        <h2 class="text-3xl font-bold tracking-tight">Payment Successful!</h2>
+        <p class="text-slate-500">Your transaction has been processed successfully.</p>
+    </div>
+
+    <div
+        class="w-full bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div class="flex justify-between items-center text-sm">
+            <span class="text-slate-500 font-medium">Reference</span>
+            <span class="font-bold font-mono">{{ reference }}</span>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+            <span class="text-slate-500 font-medium">Status</span>
+            <span
+                class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-[10px] font-bold uppercase rounded-full">Completed</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-full gap-3 pt-4">
+        <a href="{{ url_for('index') }}"
+            class="w-full bg-primary text-white py-4 rounded-2xl font-bold shadow-lg shadow-black/10 active:scale-[0.98] transition-all">
+            Back to Dashboard
+        </a>
+        <button onclick="window.print()"
+            class="w-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white py-4 rounded-2xl font-bold active:scale-[0.98] transition-all">
+            Download Receipt
+        </button>
+    </div>
+</section>
+{% endblock %}

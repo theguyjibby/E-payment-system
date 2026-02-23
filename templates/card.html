@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Pay with Card - Monochrome Pay{% endblock %}
+
+{% block content %}
+<section class="space-y-6">
+    <div class="flex items-center gap-4 mb-2">
+        <a href="{{ url_for('donate') }}"
+            class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <div>
+            <h2 class="text-2xl font-bold tracking-tight">Debit Card</h2>
+            <p class="text-sm text-slate-500">Fast & secure payment via Paystack</p>
+        </div>
+    </div>
+
+    <!-- Card Form -->
+    <div
+        class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+        <div>
+            <label class="block text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-2">Amount
+                (NGN)</label>
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold text-slate-400">₦</span>
+                <input type="number" id="amount" placeholder="0.00"
+                    class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-4 pl-10 pr-4 text-2xl font-bold focus:ring-2 focus:ring-primary transition-all">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-2">Remark
+                (Optional)</label>
+            <input type="text" id="remark" placeholder="What's this for?"
+                class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl py-4 px-4 text-base focus:ring-2 focus:ring-primary transition-all">
+        </div>
+    </div>
+
+    <button id="pay-button" onclick="handleCardPayment()"
+        class="w-full bg-primary text-white py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-black/10 active:scale-[0.98] transition-all disabled:opacity-50">
+        <span class="material-symbols-outlined">credit_card</span>
+        Pay Now
+    </button>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    async function handleCardPayment() {
+        const amount = document.getElementById('amount').value;
+        const remark = document.getElementById('remark').value;
+
+        if (!amount || amount <= 0) {
+            alert('Please enter a valid amount');
+            return;
+        }
+
+        const btn = document.getElementById('pay-button');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Processing...';
+
+        try {
+            const response = await fetch('/donate/card', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: parseFloat(amount), remark })
+            });
+            const data = await response.json();
+            if (data.authorization_url) {
+                window.location.href = data.authorization_url;
+            } else {
+                alert(data.error || 'Failed to initialize payment');
+            }
+        } catch (error) {
+            alert('An error occurred. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined">credit_card</span> Pay Now';
+        }
+    }
+</script>
+{% endblock %}
