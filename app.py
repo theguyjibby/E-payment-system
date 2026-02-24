@@ -17,7 +17,7 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///donations.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your-secret-key-here'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db = SQLAlchemy(app)
 
 class Donations(db.Model):
